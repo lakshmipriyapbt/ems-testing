@@ -1,0 +1,14 @@
+FROM openjdk:21-jdk-slim
+WORKDIR /app
+COPY invoice/gradle /app/gradle
+COPY invoice/gradlew /app/
+COPY invoice/build.gradle /app/
+COPY invoice/settings.gradle /app/
+RUN chmod +x gradlew
+COPY invoice/src /app/src
+RUN ./gradlew build --no-daemon
+RUN cp /app/build/libs/invoice-0.0.1-SNAPSHOT.jar /app/
+COPY certificates/ssl.jks /app/certificates/
+EXPOSE 8002
+CMD ["java", "-jar", "/app/invoice-0.0.1-SNAPSHOT.jar"]
+

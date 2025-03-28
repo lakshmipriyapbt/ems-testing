@@ -9,6 +9,6 @@ RUN chmod +x gradlew
 COPY ./employee/src /app/src
 RUN ./gradlew build --no-daemon
 RUN cp /app/build/libs/employee-1.0.0.jar /app/
-COPY ./certificates/ssl.jks /app/certificates/
-EXPOSE 8092
+COPY certificates/ssl.jks /app/certificates/
+EXPOSE 8012
 CMD ["java", "-jar", "/app/employee-1.0.0.jar"]

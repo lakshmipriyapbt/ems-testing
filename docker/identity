@@ -9,6 +9,6 @@ RUN chmod +x gradlew
 COPY ./identity/src /app/src
 RUN for i in {1..5}; do ./gradlew build --no-daemon && break || sleep 15; done
 RUN cp /app/build/libs/identity-1.0.0.jar /app/
-COPY ./certificates/ssl.jks /app/certificates/
-EXPOSE 9090
+COPY certificates/ssl.jks /app/certificates/
+EXPOSE 9002
 CMD ["java", "-jar", "/app/identity-1.0.0.jar"]

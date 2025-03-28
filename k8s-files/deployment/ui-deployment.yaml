@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  namespace: ems-testing
+  labels:
+    app: frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - name: frontend
+        image: frontend:latest
+        ports:
+        - containerPort: 2801
+        env:  # Add environment variables for database and Elasticsearch
+        - name: ELASTICSEARCH_URL
+          value: "http://host.docker.internal:9201"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://192.168.1.163:3306/invoice"
+        volumeMounts:  # Add volume for uploaded images
+        - mountPath: /home/ubuntu/ems_testing_imag_bkp
+          name: image-storage
+        imagePullPolicy: IfNotPresent
+      volumes:  # Add PersistentVolumeClaim reference
+      - name: image-storage
+        persistentVolumeClaim:
+          claimName: pvc     

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: emp-deployment
+  namespace: ems-testing
+  labels:
+    app: employee
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: employee
+  template:
+    metadata:
+      labels:
+        app: employee
+    spec:
+      tolerations:
+      - key: "node-role.kubernetes.io/control-plane"
+        operator: "Exists"
+        effect: "NoSchedule"
+      containers:
+      - name: employee
+        image: employee:latest
+        imagePullPolicy: Never   
+        ports:
+        - containerPort: 8092
+        env:
+        - name: ELASTICSEARCH_URL
+          value: http://172.31.11.243:9201
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://172.31.11.243:3306/invoice
+        volumeMounts:
+        - name: image-volume
+          mountPath: /home/ubuntu/ems_testing_imag_bkp
+      volumes:
+      - name: image-volume
+        persistentVolumeClaim:
+          claimName: pvc

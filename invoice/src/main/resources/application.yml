@@ -4,7 +4,7 @@ server:
     contextPath: /invoice
   ssl:
     enabled: true
-    key-store: ../certificates/ssl.jks
+    key-store: certificates/ssl.jks
     key-store-password: pathbreaker
     key-alias: pbt
     key-store-type: JKS
@@ -15,7 +15,7 @@ spring:
   main:
     allow-circular-references: true
   datasource:
-    url: jdbc:mysql://localhost:3306/invoice
+    url: jdbc:mysql://172.31.11.243:3306/invoice
     username: root
     password: Path@2014
     driver-class-name: com.mysql.cj.jdbc.Driver

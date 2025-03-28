@@ -1,42 +1,59 @@
 services:
   frontend:
     build:
-      context: ../ui
-      dockerfile: Dockerfile
+      context: ../
+      dockerfile: docker/frontend
     ports:
-      - "2800:2800"
+      - "2801:2801"
     networks:
       - ems-network
     environment:
-      - ELASTICSEARCH_URL=http://host.docker.internal:9200
+      - ELASTICSEARCH_URL=http://host.docker.internal:9201
+      - SPRING_DATASOURCE_URL=jdbc:mysql://172.31.11.243:3306/invoice
+    volumes:
+      - ems_testing_upload_files:/opt/ems_testing_imag_bkp
   identity:
     build:
       context: ../
       dockerfile: docker/identity
     ports:
-      - "9090:9090"
+      - "9002:9002"
     networks:
       - ems-network
     environment:
-      - ELASTICSEARCH_URL=http://host.docker.internal:9200
+      - ELASTICSEARCH_URL=http://host.docker.internal:9201
+      - SPRING_DATASOURCE_URL=jdbc:mysql://172.31.11.243:3306/invoice
+    volumes:
+      - ems_testing_upload_files:/opt/ems_testing_imag_bkp
   employee:
     build:
       context: ../
       dockerfile: docker/employee
     ports:
-      - "8092:8092"
+      - "8012:8012"
     networks:
       - ems-network
     environment:
-      - ELASTICSEARCH_URL=http://host.docker.internal:9200
+      - ELASTICSEARCH_URL=http://host.docker.internal:9201
+      - SPRING_DATASOURCE_URL=jdbc:mysql://172.31.11.243:3306/invoice
+    volumes:
+      - ems_testing_upload_files:/opt/ems_testing_imag_bkp
+  invoice:
+    build:
+      context: ../
+      dockerfile: docker/invoice
+    ports:
+      - "8002:8002"
+    networks:
+      - ems-network
+    environment:
+      - ELASTICSEARCH_URL=http://host.docker.internal:9201
+      - SPRING_DATASOURCE_URL=jdbc:mysql://172.31.11.243:3306/invoice
+    volumes:
+      - ems_testing_upload_files:/opt/ems_testing_imag_bkp
 networks:
   ems-network:
-
-
-
-
-
-
-
+volumes:
+  ems_testing_upload_files:
 
 

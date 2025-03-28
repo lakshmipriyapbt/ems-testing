@@ -4,7 +4,7 @@ server:
     contextPath: /ems
   ssl:
     enabled: true
-    key-store: ../certificates/ssl.jks
+    key-store: certificates/ssl.jks
     key-store-password: pathbreaker
     key-alias: pbt
     key-store-type: JKS
@@ -38,7 +38,7 @@ spring:
 fixed:
   otp: 123456
 es:
-  esHost: localhost
+  esHost: 172.31.11.243
   esPort: 9201
 springdoc:
   swagger-ui:
