@@ -24,7 +24,7 @@ spec:
         image: employee:latest
         imagePullPolicy: Never   
         ports:
-        - containerPort: 8092
+        - containerPort: 8012
         env:
         - name: ELASTICSEARCH_URL
           value: http://172.31.11.243:9201
