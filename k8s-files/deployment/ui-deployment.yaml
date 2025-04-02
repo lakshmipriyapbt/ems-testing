@@ -28,7 +28,7 @@ spec:
         - name: ELASTICSEARCH_URL
           value: "http://host.docker.internal:9201"
         - name: SPRING_DATASOURCE_URL
-          value: "jdbc:mysql://192.168.1.163:3306/invoice"
+          value: "jdbc:mysql://172.31.11.243:3306/invoice"
         volumeMounts:  # Add volume for uploaded images
         - mountPath: /home/ubuntu/ems_testing_imag_bkp
           name: image-storage
